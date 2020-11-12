@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import axios from 'axios';
 
 class Create extends React.Component {
 
@@ -40,6 +41,20 @@ class Create extends React.Component {
   handleSubmit(event) {
     // popup
     alert("Movie Added " + this.state.Title+ " "+this.state.Year+ " " +this.state.Poster)
+    
+    const newMovie = {
+      title: this.state.Title,
+      year: this.state.Year,
+      poster: this.state.Poster
+    }
+    //data is submitted to the url using the post
+    axios.post('http://localhost:4000/api/movies',newMovie)
+    .then((res)=>{
+      console.log(res);
+    })
+    .catch((err)=>{
+      console.log(err)
+    });
   }
 
   render() {

@@ -13,13 +13,13 @@ class Read extends React.Component {
   //lifecycle hook, will fire every time the component becomes active
   componentDidMount() {
     //asynchronous call to retrieve infromation from the website
-    axios.get('https://jsonblob.com/api/jsonblob/520c3b5e-0312-11eb-a6af-cbf00d776032')
+    axios.get('http://localhost:4000/api/movies')
       // if the call is ok it will enter this
       .then(response => {
         this.setState(
           {
             //this will assign all the data retrieved to movies
-            movies: response.data.Search
+            movies: response.data.movies
           }
         )
       })
