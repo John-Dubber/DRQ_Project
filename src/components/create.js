@@ -81,7 +81,7 @@ class Create extends React.Component {
               // bootstrap css
               className="form-control"
               value={this.state.Year}
-              onChange={this.OnChangeMovieTitle}
+              onChange={this.OnChangeMovieYear}
             >
             </input>
           </div>

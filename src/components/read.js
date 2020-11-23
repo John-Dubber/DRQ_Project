@@ -19,7 +19,7 @@ class Read extends React.Component {
         this.setState(
           {
             //this will assign all the data retrieved to movies
-            movies: response.data.movies
+            movies: response.data
           }
         )
       })
