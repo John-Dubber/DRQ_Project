@@ -58,12 +58,25 @@ app.get('/api/movies/:id', (req, res) => {
     })
 })
 
+//sever deletes the document with the id given in the parameters passed to it in the url
+app.delete('/api/movies/:id', (req, res) => {
+    console.log("Delete " + req.params.id);
+    //searches the database for _id:(the id passed in by the url)
+    //if there is an  error it sends there was an error else it sends the data
+    movieModel.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
+        if (err)
+            res.send(err);
+        res.send(data);
+    })
+})
+
+
 app.post('/api/movies', (req, res) => {
     console.log(req.body);
     /* console.log(req.body.title);
     console.log(req.body.year);
     console.log(req.body.poster); */
-
+    
     movieModel.create({
         Title: req.body.title,
         Year: req.body.year,
@@ -71,6 +84,7 @@ app.post('/api/movies', (req, res) => {
     })
     console.log('Data Received!');
 })
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
