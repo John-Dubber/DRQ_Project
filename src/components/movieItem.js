@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 //axios import
 import axios from 'axios';
+//imports react link to send the id within the url
+import {Link} from 'react-router-dom';
 
 class MovieItem extends React.Component {
 
@@ -45,6 +47,8 @@ class MovieItem extends React.Component {
                         </blockquote>
                         
                         <Button variant="danger" onClick={this.DeleteMovie}>Delete</Button>
+                        {/* Link sends you to the edit page with the movie id as part of the url */}
+                        <Link to={'/edit/' +this.props.movie._id} className = 'btn btn-primary'>Update</Link>
                     </Card.Body>
                 </Card>
             </div>

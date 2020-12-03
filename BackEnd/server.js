@@ -49,7 +49,9 @@ app.get('/api/movies', (req, res) => {
         res.json(data);
     })
 })
-
+/**finds the movie by the unique id 
+ * 
+*/
 app.get('/api/movies/:id', (req, res) => {
     console.log(req.params.id);
 
@@ -57,6 +59,26 @@ app.get('/api/movies/:id', (req, res) => {
         res.json(data);
     })
 })
+
+/**Updates a document in the database 
+ * Takes in an id from the passed through the url
+ * Searches the mongo database by the id and updates
+ * the whole document
+ * it then sends all the data 
+*/
+app.put('/api/movies/:id', (req, res) =>{
+    console.log("Update movie: "+req.params.id);
+    console.log(req.body);
+
+    movieModel.findByIdAndUpdate(req.params.id,
+        req.body,
+        (err,data)=>{
+            res.send(data);
+        })
+})
+
+
+
 
 //sever deletes the document with the id given in the parameters passed to it in the url
 app.delete('/api/movies/:id', (req, res) => {
