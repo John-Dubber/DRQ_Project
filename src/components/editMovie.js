@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import axios from 'axios';
 
-class Create extends React.Component {
+class EditMovie extends React.Component {
 
   constructor() {
     super();
@@ -19,6 +19,25 @@ class Create extends React.Component {
     }
   }
   
+  /**componentDidMount is called immediately when the page is entered
+   * It sends a request to the server to get the information about the
+   * requested document to be edited
+   * it then saves the information to be used
+   */
+  componentDidMount(){
+      axios.get('http://localhost:4000/api/movies/'+this.props.match.params.id)
+      .then((response)=>{
+          this.setState({
+              Title:response.data.Title,
+              Year:response.data.Year,
+              Poster:response.data.Poster,
+              _id:response.data._id
+          })
+      })
+      .catch((err)=>{
+          console.log(err)
+      });
+  }
   OnChangeMovieTitle(event) {
     this.setState({
       Title: event.target.value
@@ -37,30 +56,34 @@ class Create extends React.Component {
     })
   }
 
-  // when the submit is pressed this is run
+  /**handleSubmit is triggered when the button is pressed
+   * it saves the data into newMovie which is then sent to
+   * the server as a put request
+   */
   handleSubmit(event) {
     // popup
     alert("Movie Added " + this.state.Title+ " "+this.state.Year+ " " +this.state.Poster)
     
     const newMovie = {
-      title: this.state.Title,
-      year: this.state.Year,
-      poster: this.state.Poster
+      Title: this.state.Title,
+      Year: this.state.Year,
+      Poster: this.state.Poster,
+      _id: this.state._id
     }
-    //data is submitted to the url using the post
-    axios.post('http://localhost:4000/api/movies',newMovie)
+    //data is submitted to the url using the put
+    axios.put('http://localhost:4000/api/movies/'+this.state._id, newMovie)
     .then((res)=>{
-      console.log(res);
+      console.log(res.data);
     })
     .catch((err)=>{
-      console.log(err)
+      console.log(err);
     });
   }
 
   render() {
     return (
       <div className="App">
-        <h1>This is the create component</h1>
+        <h1>Please enter the updated information for the movie</h1>
         <form onSubmit={this.handleSubmit}>
           <div>
             {/* Label */}
@@ -99,7 +122,8 @@ class Create extends React.Component {
           <div>
             {/* Submit */}
             <input
-              type="submit">
+              type="submit"
+              value='Edit Movie'>
             </input>
           </div>
         </form>
@@ -107,5 +131,5 @@ class Create extends React.Component {
     );
   }
 }
-
-export default Create;
+//marks the script for export
+export default EditMovie;
